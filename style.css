@@ -27,10 +27,44 @@ p{
 }
 
 /*_____________________________GameBoard_______________________________________*/
-
+.gameHeader{
+display: block;
+position: relative;
+height: 50px;
+width: 888px;
+margin:10px auto;
+background: blue;
+}
+.htmlBoard{
+display: block;
+position: relative;
+height:690px;
+width: 888px;
+border: 1px black solid;
+background: black;
+margin:0 auto;
+}
 
 /*_____________________________Player_________________________________*/
-
+#p1{
+width: 100px;
+height: 100px;
+right:245px;
+/*top:550px;*/
+background: red;
+position: relative;
+display: inline-block;
+}
+#p2{
+	text-align: none;
+width: 100px;
+height: 100px;
+right:245px;
+/*top:550px;*/
+background: blue;
+position: relative;
+display: inline-block;
+}
 
 /*_____________________________Sections / divs__________________________________*/
 #left{
