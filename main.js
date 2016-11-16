@@ -28,10 +28,14 @@ this.name = name;
 this.x=x;
 this.y=y;
 this.score=score;
+////////// make 'occupied-zone based on x,y,w,h'
+this.x2 = x+100;
+this.y2 = y+100;
+
+
 }
 var player1 = new Player('p1',user1name,0,0,0);
 var player2 = new Player('p2',user2name,10,400,0);
-
 
 /*____________________________Structure Objects_____________________________________*/
 function Frame(cl,x,y,width,height){
@@ -41,6 +45,8 @@ this.x = y;
 this.y = y;
 this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+width+'px'+';height:'+height+'px');
 this.height = height;
+
+////////// make 'dead-zone based on x,y,w,h'
 }
 var floor = new Frame('floor',0,420,888,75);
 var plat1 = new Frame('platform',100,188,175,30);
@@ -56,7 +62,7 @@ board.append(floor.tag);
 board.append(plat1.tag);
 
 //console.log(this.frame);
-
+//////border@ x=-390>390  y=0>500
 }
 /*____________________________Turn_______________________________________________*/
 //this is where the events during the turn will go (player onboard,setTimer,score>player,turnEnd)
@@ -79,25 +85,51 @@ Player.prototype.moveX=function(player,currentKey){
 //	console.log(currentKey);
 if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=++
 	player.x = player.x -=20;
-	currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-		//console.log(currentId);
-
+		if(player.x<-400){
+		console.log('out of bounds'+player.x);
+		player.x = -400;
+		console.log(player.x);
+		}
+		else{
+		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
+			console.log(player.x);
+		}
 }else if(currentKey===39){		//checks for right arrow press left = --
 	player.x = player.x +=20;
-	currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
+		if(player.x>400){
+		console.log('out of bounds'+player.x);
+		player.x = player.x =400;
+		} else{
+		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
+			console.log(player.x);
+		}
 }
 //√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
-if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
+	
+	
+	if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
 	player.y = player.y -=20;
-	currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-
-}else if(currentKey===40){		//checks for down arrow press top = --
+		if(player.y<0){
+		console.log('out of bounds'+player.y);
+		player.y=0;
+		}else{
+		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
+		console.log(player.y);
+		}
+	}else if(currentKey===40){		//checks for down arrow press top = --
 	player.y = player.y +=20;
-	currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-}
+		if(player.y>500){
+		console.log('out of bounds'+player.y);
+		player.y=500;
+		}else{
+		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
+		console.log(player.y);
+		}
+	}
+
 };
 
 //console.log(player1.moveX(player1));
@@ -170,8 +202,22 @@ keyStuff(player1);
 /*function reset(){		//refreshes page
 	location.reload();
 }*/
+/*
+var count=5; //count to 60seconds
+var countInterval = setInterval(timer,1000);	//1000ms===1s
 
-
+function timer(){
+	count -=1;
+	if(count<0){
+		clearInterval(countInterval);
+		return;
+	}
+	domSelector('#timer').innerHTML=count+" seconds";
+	if(count===0){
+		console.log('0000');
+	}
+}
+*/
 
 /*___________________________________________________________________________*/
 };
