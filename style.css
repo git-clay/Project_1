@@ -44,6 +44,18 @@ border: 1px black solid;
 background: black;
 margin:0 auto;
 }
+.floor{
+position: relative;
+display: block;
+background: gray;
+z-index: 1px;
+}
+.platform{
+position: relative;
+display: block;
+background: tan;
+z-index: 1px;
+}
 
 /*_____________________________Player_________________________________*/
 #p1{
@@ -55,7 +67,7 @@ position: relative;
 display: inline-block;
 }
 #p2{
-	text-align: none;
+text-align: none;
 width: 100px;
 height: 100px;
 /*top:550px;*/

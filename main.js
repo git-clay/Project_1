@@ -28,21 +28,34 @@ this.name = name;
 this.x=x;
 this.y=y;
 this.score=score;
-//console.log(board[0]);
-//board[0].append(char);
-
 }
 var player1 = new Player('p1',user1name,0,0,0);
 var player2 = new Player('p2',user2name,10,400,0);
 
+
+/*____________________________Structure Objects_____________________________________*/
+function Frame(cl,x,y,width,height){
+this.tag = document.createElement('div');
+this.tag.setAttribute('class',cl);
+this.x = y;
+this.y = y;
+this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+width+'px'+';height:'+height+'px');
+this.height = height;
+}
+var floor = new Frame('floor',0,420,888,75);
+var plat1 = new Frame('platform',100,188,175,30);
+
 /*____________________________Board ____________________________________________*/
 //create floor 
 //create platforms
-//call and place *current player* (if turn===...)
-function onBoard(player){
+//√√√call and place *current player* (if turn===...)
+function onBoard(player, frame){
 //console.log(player.tag.id);
 board.append(player.tag);
-console.log(board);
+board.append(floor.tag);
+board.append(plat1.tag);
+
+//console.log(this.frame);
 
 }
 /*____________________________Turn_______________________________________________*/
@@ -67,36 +80,24 @@ Player.prototype.moveX=function(player,currentKey){
 if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=++
 	player.x = player.x -=20;
 	currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-		console.log(currentId);
+		//console.log(currentId);
 
 }else if(currentKey===39){		//checks for right arrow press left = --
 	player.x = player.x +=20;
 	currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-		console.log(currentId);
 }
-
-
-//if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
-
+//√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
-	console.log(player.tag.id+' '+'movedY');
-
 if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
 	player.y = player.y -=20;
 	currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-		console.log(currentId);
 
 }else if(currentKey===40){		//checks for down arrow press top = --
 	player.y = player.y +=20;
 	currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-		console.log(currentId);
 }
-	
-
-//if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
-
 };
 
 //console.log(player1.moveX(player1));
@@ -116,7 +117,7 @@ function keyStuff(player) {
 		case 37: 	//<
 			//console.log(currentKey);
 			//call move function for left here & store into player
-		player.moveX(player,currentKey);		//calls move() which appends style
+			player.moveX(player,currentKey);		//calls move() which appends style
 				event.preventDefault();	//prevents arrow from scrolling page
 			//	console.log('<'+player.tag.id);	
 		break;
@@ -126,7 +127,7 @@ function keyStuff(player) {
 		//player.moveX(player);
 				player.moveX(player,currentKey);
 				event.preventDefault();	//prevents arrow from scrolling page
-				console.log('>');	
+				//console.log('>');	
 		break;
 
 		case 38: 	//^
@@ -134,7 +135,7 @@ function keyStuff(player) {
 		//player.moveY(player);
 				event.preventDefault();	//prevents arrow from scrolling page
 				player.moveY(player,currentKey);
-				console.log('^');
+				//console.log('^');
 		break;
 
 		case 40: 	//v
@@ -142,10 +143,9 @@ function keyStuff(player) {
 		//player.moveY(player);
 				event.preventDefault();		//prevents arrow from scrolling page
 				player.moveY(player,currentKey);
-				console.log('v');
+				//console.log('v');
 		break;
 	}
-	
 });	
 }
 keyStuff(player1);
