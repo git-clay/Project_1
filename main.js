@@ -60,12 +60,23 @@ onBoard(player2);
 }
 
 /*____________________________Player Movement_____________________________________*/
-Player.prototype.moveX=function(player){
+Player.prototype.moveX=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
 	console.log(player.tag.id+' '+'moved');
+		console.log(currentKey);
 
+if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=--
+	player.x = player.x +=20;
 	currentId.setAttribute('style','left:'+player.x+'px');
-	console.log(currentId);
+		console.log(currentId);
+
+}else if(currentKey===39){		//checks for right arrow press left = ++
+	player.x = player.x -=20;
+	currentId.setAttribute('style','left:'+player.x+'px');
+		console.log(currentId);
+
+}
+
 
 //if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
 
@@ -81,7 +92,7 @@ Player.prototype.moveY=function(player){
 
 };
 
-console.log(player1.moveX(player1));
+//console.log(player1.moveX(player1));
 //console.log(player1.moveY(player1));
 
 /*document.addEventListener('keydown',function(event){			///finds the keycode of each key pressed
@@ -93,27 +104,34 @@ console.log(player1.moveX(player1));
 //"v" arrow = 40
 function keyStuff(player) {
 	document.addEventListener('keydown',function(event){	//looks for a keypress>>passes # for corrasponding keyCode
+	var currentKey = event.keyCode;
 	switch(event.keyCode){
 		case 37: 	//<
-		//call move function for left here & store into player
-		//player.moveX(player);
-		console.log('<');
+			//console.log(currentKey);
+			//call move function for left here & store into player
+		player.moveX(player,currentKey);		//calls move() which appends style
+				event.preventDefault();	//prevents arrow from scrolling page
+			//	console.log('<'+player.tag.id);	
 		break;
 		case 39: 	//>
 		//call move function for right here & store into player
 		//player.moveX(player);
-				console.log('>');
+				player.moveX(player,currentKey);
+				event.preventDefault();	//prevents arrow from scrolling page
+				console.log('>');	
 
 		break;
 		case 38: 	//^
 		//call move function for up here & store into player
 		//player.moveY(player);
+				event.preventDefault();	//prevents arrow from scrolling page
 				console.log('^');
 
 		break;
 		case 40: 	//v
 		//call move function for down here & store into player
 		//player.moveY(player);
+				event.preventDefault();		//prevents arrow from scrolling page
 				console.log('v');
 
 		break;
