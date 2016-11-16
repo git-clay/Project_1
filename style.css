@@ -49,7 +49,6 @@ margin:0 auto;
 #p1{
 width: 100px;
 height: 100px;
-right:245px;
 /*top:550px;*/
 background: red;
 position: relative;
@@ -59,7 +58,6 @@ display: inline-block;
 	text-align: none;
 width: 100px;
 height: 100px;
-right:245px;
 /*top:550px;*/
 background: blue;
 position: relative;
