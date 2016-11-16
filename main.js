@@ -47,11 +47,13 @@ console.log(board);
 }
 /*____________________________Turn_______________________________________________*/
 //this is where the events during the turn will go (player onboard,setTimer,score>player,turnEnd)
-var currentTurn=2; // even=player1 , odd=player 2
+var currentTurn=0; // even=player1 , odd=player 2
 // maybe needs a button to start? or on window load
 if(currentTurn%2===0){ //is even
 //player 1 functions
-onBoard(player1);
+onBoard(player1);		//initial to begin
+						//setTimer onBoard
+						//score onBoard
 }else if(currentTurn%2===1){
 //player 2 functions
 onBoard(player2);
@@ -80,7 +82,7 @@ Player.prototype.moveY=function(player){
 };
 
 console.log(player1.moveX(player1));
-console.log(player1.moveY(player1));
+//console.log(player1.moveY(player1));
 
 /*document.addEventListener('keydown',function(event){			///finds the keycode of each key pressed
 	console.log(event.which);
@@ -89,25 +91,37 @@ console.log(player1.moveY(player1));
 //"> arrow" = 39
 //"^" arrow = 38
 //"v" arrow = 40
-/*document.addEventListener('keydown',function(event){	//looks for a keypress>>passes # for corrasponding keyCode
+function keyStuff(player) {
+	document.addEventListener('keydown',function(event){	//looks for a keypress>>passes # for corrasponding keyCode
 	switch(event.keyCode){
 		case 37: 	//<
 		//call move function for left here & store into player
-		player.moveX(player);
+		//player.moveX(player);
+		console.log('<');
+		break;
 		case 39: 	//>
 		//call move function for right here & store into player
-		player.moveX(player);
+		//player.moveX(player);
+				console.log('>');
 
+		break;
 		case 38: 	//^
 		//call move function for up here & store into player
-		player.moveY(player);
+		//player.moveY(player);
+				console.log('^');
 
+		break;
 		case 40: 	//v
 		//call move function for down here & store into player
-		player.moveY(player);
-	}
-});*/	
+		//player.moveY(player);
+				console.log('v');
 
+		break;
+	}
+	
+});	
+}
+keyStuff(player1);
 /*--if you need a location check (objectives met) they go here
 	in the form of 'if' statements*/
 
