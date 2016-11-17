@@ -44,13 +44,14 @@ var player2 = new Player('p2',user2name,10,400,0);
 /*playerX+50<=Frame && playerX-50>=Frame && playerY+50<=Frame && playerY-50>=Frame  if these are true then frame is inside player*/
 
 /*____________________________Structure Objects_____________________________________*/
-function Frame(cl,x,y,width,height){
+function Frame(cl,x,y,w,h){
 this.tag = document.createElement('div');
 this.tag.setAttribute('class',cl);
 this.x = y;
 this.y = y;
-this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+width+'px'+';height:'+height+'px');
-this.height = height;
+this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+w+'px'+';height:'+h+'px');
+this.h = h;
+this.w = w;
 }
 Frame.prototype.spaceCheck= function(x,y,w,h){
 if(this.x){		// check top x>>x line
@@ -90,7 +91,7 @@ elem.dispatchEvent(event);
 ////////// make 'dead-zone based on x,y,w,h'
 
 var floor = new Frame('floor',0,420,888,75);
-var plat1 = new Frame('platform',80,40,200,30);
+var plat1 = new Frame('platform',0,0,200,30);
 var objects = [floor,plat1];
 
 /*_______________________collision_________________________________*/
@@ -98,7 +99,9 @@ var objects = [floor,plat1];
 function collision(player){
 	for(var i=0;i<objects.length;i++){
 		//var currentOb = objects[i].x;
-		//console.log(currentOb);
+		console.log('ob.x'+objects[i].x);
+		console.log('ob.y'+objects[i].x);
+
 		if(player.x+player.w>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+player.h>objects[i].y && player.y<objects[i].y+objects[i].h){
 	console.log('collision!!!!!!!');
 		}
@@ -160,9 +163,6 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		}
 		else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-		player1.maxX = player1.x-20;		//testing to change right border
-			console.log(player1.x);
-			console.log(player1.maxX);
 
 		}
 }else if(currentKey===39){		//checks for right arrow press left = --
@@ -176,11 +176,10 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		}
 
 }
-		console.log(player1.maxX);	/// finding right player border
 
 //√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
-console.log(player.x);
-			console.log(player.y);
+console.log('px'+player.x);
+			console.log('py'+player.y);
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
@@ -204,8 +203,8 @@ Player.prototype.moveY=function(player,currentKey){
 		}
 	}
 
-	console.log(player.x);
-			console.log(player.y);
+	console.log('px'+player.x);
+			console.log('py'+player.y);
 
 };
 

@@ -45,16 +45,17 @@ background: black;
 margin:0 auto;
 }
 .floor{
+	float: left;
 position: relative;
-display: block;
+display: inline-block;
 background: gray;
-z-index: 1px;
 }
 .platform{
+vertical-align: bottom;
+float:left;
 position: relative;
-display: block;
+display: inline-block;
 background: tan;
-z-index: 1px;
 }
 
 /*_____________________________Player_________________________________*/
