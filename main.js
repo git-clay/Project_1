@@ -1,8 +1,13 @@
 window.onload=function(){
+	/*var retrievedObject = localStorage.getItem('testObject');		////example of how to retrieve sessionstorage
+console.log('retrievedObject: ', JSON.parse(retrievedObject));*/	///look at bottom
 
 var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
 var user1name = inputInfo.slice(10,inputInfo.indexOf('&')); //slices ^ to get player1name
 var user2name = inputInfo.slice(inputInfo.indexOf('&')+10); //slices to get player 2 name
+
+var obMax;
+var obMin;
 
 var domSelector =function(element){		//function to search for id,class,or tag (element)
 	var found;
@@ -28,14 +33,14 @@ this.name = name;
 this.x=x;
 this.y=y;
 this.score=score;
-////////// make 'occupied-zone based on x,y,w,h'
-this.x2 = x+100;
-this.y2 = y+100;
-
-
+this.maxX=x+50;
+this.minX=x-50;
+this.maxY=y+50;
+this.minY=y-50;
 }
 var player1 = new Player('p1',user1name,0,0,0);
 var player2 = new Player('p2',user2name,10,400,0);
+/*playerX+50<=Frame && playerX-50>=Frame && playerY+50<=Frame && playerY-50>=Frame  if these are true then frame is inside player*/
 
 /*____________________________Structure Objects_____________________________________*/
 function Frame(cl,x,y,width,height){
@@ -45,9 +50,44 @@ this.x = y;
 this.y = y;
 this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+width+'px'+';height:'+height+'px');
 this.height = height;
+}
+Frame.prototype.spaceCheck= function(x,y,w,h){
+if(this.x){		// check top x>>x line
+
+}
+else if(this){		//check bottom x>>x line
+	
+	}
+};
+/*
+
+
+
+
+var event1 = new CustomEvent('build');
+
+elem.addEventListener('build', function (e){
+	....
+},false);
+
+elem.dispatchEvent(event);
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
 
 ////////// make 'dead-zone based on x,y,w,h'
-}
+
 var floor = new Frame('floor',0,420,888,75);
 var plat1 = new Frame('platform',100,188,175,30);
 
@@ -79,20 +119,27 @@ onBoard(player2);
 }
 
 /*____________________________Player Movement_____________________________________*/
+
+/////////////// make attribute for objects to store deadzones???
+
+
 Player.prototype.moveX=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
 //	console.log(player.tag.id+' '+'moved');
 //	console.log(currentKey);
 if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=++
 	player.x = player.x -=20;
-		if(player.x<-400){
+		if(player.x<-400){			//checks x position of player to determin if out of bounds
 		console.log('out of bounds'+player.x);
 		player.x = -400;
 		console.log(player.x);
 		}
 		else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-			console.log(player.x);
+		player1.maxX = player1.x-20;		//testing to change right border
+			console.log(player1.x);
+			console.log(player1.maxX);
+
 		}
 }else if(currentKey===39){		//checks for right arrow press left = --
 	player.x = player.x +=20;
@@ -103,13 +150,14 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
 			console.log(player.x);
 		}
+
 }
+		console.log(player1.maxX);	/// finding right player border
+
 //√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
-	
-	
 	if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
 	player.y = player.y -=20;
 		if(player.y<0){
@@ -129,7 +177,6 @@ Player.prototype.moveY=function(player,currentKey){
 		console.log(player.y);
 		}
 	}
-
 };
 
 //console.log(player1.moveX(player1));
@@ -194,9 +241,9 @@ keyStuff(player1);
 //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
 /*____________________________Timer_______________________________________*/
-//countdown timer
+//√√countdown timer
 //maybe: in a loading bar format
-//00:00 >> end of turn
+//√√00:00 >> end of turn
 //pop-up window to display score and other info about turn
 //***** store player info with sessionStorage *******
 /*function reset(){		//refreshes page
@@ -214,10 +261,14 @@ function timer(){
 	}
 	domSelector('#timer').innerHTML=count+" seconds";
 	if(count===0){
-		console.log('0000');
+		console.log('0000');	
+		sessionStorage.setITEM('player1', JSON.stringify(player1))						//save player info to sessionStorage
+								//display results
+								//turn++
 	}
 }
 */
 
 /*___________________________________________________________________________*/
+
 };
