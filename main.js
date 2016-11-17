@@ -47,43 +47,38 @@ var player2 = new Player('p2',user2name,10,400,0);
 function Frame(cl,x,y,w,h){
 this.tag = document.createElement('div');
 this.tag.setAttribute('class',cl);
-this.x = y;
+this.x = x;
 this.y = y;
 this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+w+'px'+';height:'+h+'px');
 this.h = h;
 this.w = w;
 }
-Frame.prototype.spaceCheck= function(x,y,w,h){
-if(this.x){		// check top x>>x line
-
-}
-else if(this){		//check bottom x>>x line
-	
-	}
-};
-
 
 ////////// make 'dead-zone based on x,y,w,h'
 
 var floor = new Frame('floor',0,525,888,75);
-var plat1 = new Frame('platform',0,0,200,30);
-var objects = [floor,plat1];
+var plat1 = new Frame('platform',0,101,200,50);
+var plat2 = new Frame('platform',350,101,200,50);
+
+var objects = [floor,plat1,plat2];
+
+console.log(objects);
 
 /*_______________________collision_________________________________*/
 
 function collision(player){
 	for(var i=0;i<objects.length;i++){
 		//var currentOb = objects[i].x;
-		console.log('ob.x'+objects[i].x);
-		console.log('ob.y'+objects[i].x);
-
-		if(player.x+player.w>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+player.h>objects[i].y && player.y<objects[i].y+objects[i].h){
+	//	console.log(objects[i]);
+	//	console.log('ob.x'+objects[i].x);
+	//	console.log('ob.y'+objects[i].x);
+var check = player.x+player.w>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+player.h>objects[i].y && player.y<objects[i].y+objects[i].h;
+		if(check){
 	console.log('collision!!!!!!!');
-		}
-		else{
-		console.log('no collision');
+		return true;
 
 		}
+		
 	/*
 	(player.x + player.w > object.x && player.x < object.x + object.width()) &&
     (player.y + player.h > object.y && player.y < object.y + object.height())
@@ -101,6 +96,7 @@ function onBoard(player, frame){
 board.append(player.tag);
 board.append(floor.tag);
 board.append(plat1.tag);
+board.append(plat2.tag);
 
 //console.log(this.frame);
 //////border@ x=-390>390  y=0>500
@@ -128,16 +124,20 @@ Player.prototype.moveX=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
 //	console.log(player.tag.id+' '+'moved');
 //	console.log('x'+player.x);
-collision(player);
 if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=++
 	player.x = player.x -=20;
-
+//console.log(player.x);
 		if(player.x<0){  //checks x position of player to determin if out of bounds
 		console.log('out of bounds'+player.x);
 		player.x = 0;
 		}
+		else if(collision(player)===true){
+			player.x = player.x+20;
+	//		console.log(player.x);
+		}
 		else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
+		//player.x = player.x -=20;
 
 		}
 }else if(currentKey===39){		//checks for right arrow press left = --
@@ -145,7 +145,9 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		if(player.x>800){
 		console.log('out of bounds'+player.x);
 		player.x = player.x =800;
-		} else{
+		} else if(collision(player)===true){
+		player.x = player.x-20;
+		}else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
 			
 		}
@@ -153,18 +155,19 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 }
 
 //√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
-console.log('px'+player.x);
-			console.log('py'+player.y);
+//console.log('px'+player.x);
+//			console.log('py'+player.y);
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
 
-	collision(player1);
 	if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
 	player.y = player.y -=20;
 		if(player.y<0){
 		console.log('out of bounds'+player.y);
 		player.y=0;
+		}else if(collision(player)===true){
+		player.y = player.y+20;
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
 		}
@@ -173,13 +176,15 @@ Player.prototype.moveY=function(player,currentKey){
 		if(player.y>500){
 		console.log('out of bounds'+player.y);
 		player.y=500;
+		}else if(collision(player)===true){
+		player.y = player.y-20;
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
 		}
 	}
 
-	console.log('px'+player.x);
-			console.log('py'+player.y);
+//	console.log('px'+player.x);
+//			console.log('py'+player.y);
 
 };
 
