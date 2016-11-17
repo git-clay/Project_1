@@ -61,36 +61,11 @@ else if(this){		//check bottom x>>x line
 	
 	}
 };
-/*
 
-
-
-
-var event1 = new CustomEvent('build');
-
-elem.addEventListener('build', function (e){
-	....
-},false);
-
-elem.dispatchEvent(event);
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
 
 ////////// make 'dead-zone based on x,y,w,h'
 
-var floor = new Frame('floor',0,420,888,75);
+var floor = new Frame('floor',0,525,888,75);
 var plat1 = new Frame('platform',0,0,200,30);
 var objects = [floor,plat1];
 

@@ -31,7 +31,7 @@ p{
 display: block;
 position: relative;
 height: 50px;
-width: 888px;
+width: 900px;
 margin:10px auto;
 background: blue;
 }
@@ -45,16 +45,16 @@ background: black;
 margin:0 auto;
 }
 .floor{
+
 	float: left;
-position: relative;
-display: inline-block;
+position: absolute;
+display: inline;
 background: gray;
 }
 .platform{
-vertical-align: bottom;
 float:left;
-position: relative;
-display: inline-block;
+position: absolute;
+display: inline;
 background: tan;
 }
 
@@ -66,7 +66,7 @@ height: 100px;
 /*top:550px;*/
 background: red;
 position: relative;
-display: inline-block;
+display: inline;
 }
 #p2{
 text-align: none;
