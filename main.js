@@ -27,11 +27,10 @@ this.tag.id = id;
 this.name = name;
 this.x=x;
 this.y=y;
+this.w=this.x+100;
+this.h=this.y+100;
 this.score=score;
 ////////// make 'occupied-zone based on x,y,w,h'
-this.x2 = x+100;
-this.y2 = y+100;
-
 
 }
 var player1 = new Player('p1',user1name,0,0,0);
@@ -49,7 +48,29 @@ this.height = height;
 ////////// make 'dead-zone based on x,y,w,h'
 }
 var floor = new Frame('floor',0,420,888,75);
-var plat1 = new Frame('platform',100,188,175,30);
+var plat1 = new Frame('platform',80,40,200,30);
+var objects = [floor,plat1];
+
+/*_______________________collision_________________________________*/
+
+function collision(player){
+	for(var i=0;i<objects.length;i++){
+		//var currentOb = objects[i].x;
+		//console.log(currentOb);
+		if(player.x+player.w>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+player.h>objects[i].y && player.y<objects[i].y+objects[i].h){
+	console.log('collision!!!!!!!');
+		}
+		else{
+		console.log('no collision');
+
+		}
+	/*
+	(player.x + player.w > object.x && player.x < object.x + object.width()) &&
+    (player.y + player.h > object.y && player.y < object.y + object.height())
+	*/
+	}
+//	console.log('func collision ran');
+}
 
 /*____________________________Board ____________________________________________*/
 //create floor 
@@ -82,34 +103,36 @@ onBoard(player2);
 Player.prototype.moveX=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
 //	console.log(player.tag.id+' '+'moved');
-//	console.log(currentKey);
+//	console.log('x'+player.x);
+collision(player);
 if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX()) left=++
 	player.x = player.x -=20;
-		if(player.x<-400){
+		if(player.x<0){
 		console.log('out of bounds'+player.x);
-		player.x = -400;
-		console.log(player.x);
+		player.x = 0;
 		}
 		else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-			console.log(player.x);
+		//	console.log(player.x);
 		}
 }else if(currentKey===39){		//checks for right arrow press left = --
 	player.x = player.x +=20;
-		if(player.x>400){
+		if(player.x>800){
 		console.log('out of bounds'+player.x);
-		player.x = player.x =400;
+		player.x = player.x =800;
 		} else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
-			console.log(player.x);
+			
 		}
+		
 }
 //√√√√if statements to determine direction pressed then apply setAttribute to change player's style(left/top)
+console.log(player.x);
+			console.log(player.y);
 };
 Player.prototype.moveY=function(player,currentKey){
 	var currentId= document.getElementById(player.tag.id);
-	
-	
+	collision(player1);
 	if(currentKey===38){			//checkes keypress for up arrow (currentKey in moveX()) top=++
 	player.y = player.y -=20;
 		if(player.y<0){
@@ -117,7 +140,6 @@ Player.prototype.moveY=function(player,currentKey){
 		player.y=0;
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-		console.log(player.y);
 		}
 	}else if(currentKey===40){		//checks for down arrow press top = --
 	player.y = player.y +=20;
@@ -126,9 +148,10 @@ Player.prototype.moveY=function(player,currentKey){
 		player.y=500;
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
-		console.log(player.y);
 		}
 	}
+	console.log(player.x);
+			console.log(player.y);
 
 };
 
