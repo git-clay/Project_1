@@ -46,7 +46,7 @@ margin:0 auto;
 }
 .floor{
 
-	float: left;
+float: left;
 position: absolute;
 display: inline;
 background: gray;
@@ -56,6 +56,12 @@ float:left;
 position: absolute;
 display: inline;
 background: tan;
+}
+.point{
+float:left;
+position: absolute;
+display: inline;
+background: blue;
 }
 
 /*_____________________________Player_________________________________*/
