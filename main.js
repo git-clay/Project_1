@@ -28,7 +28,7 @@ window.onload = function() {
     this.name = name;
     this.x = x;
     this.y = y;
-    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 72 + 'px' + ';height:' +
+    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 72.5 + 'px' + ';height:' +
       100 + 'px');
     this.score = score;
   }
@@ -47,16 +47,16 @@ window.onload = function() {
     this.w = w;
   }
   var floor = new Frame('floor', 0, 525, 900, 75);
-  var plat1 = new Frame('platform', 0, 201, 200, 50);
-  var plat2 = new Frame('platform', 350, 201, 200, 50);
+  var plat1 = new Frame('platform', 0, 251, 200, 50);
+  var plat2 = new Frame('platform', 350, 251, 200, 50);
   var objects = [floor, plat1, plat2];
 
   /*____________________________Objective Objects___________________________*/
   //figure out how to make unique objective items based on current player
-  var point1 = new Frame('point pointAnimate', 10, 150, 50, 50);
-  var point2 = new Frame('point pointAnimate', 360, 150, 50, 50);
+  //var point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
+ // var point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);
 
-  var point = [point1, point2];
+ // var point = [point1, point2];
 
   /*_______________________collision & collector_________________________________*/
   function collision(player) {
@@ -100,14 +100,20 @@ window.onload = function() {
   var currentTurn = 0; // even=player1 , odd=player 2
   // maybe needs a button to start? or on window load
   if (currentTurn % 2 === 0) { //is even
+  var point1 = new Frame('firePoint point pointAnimate', 10, 135, 75, 129);
+  var point2 = new Frame('firePoint point pointAnimate', 360, 135, 75, 129);
     onBoard(player1); //setTimer onBoard
    // score(player1); //score onBoard
     keyStuff(player1);
   } else if (currentTurn % 2 === 1) {
+   point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
+   point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);
+
     onBoard(player2);
    // score(player2);
     keyStuff(player2);
   }
+  var point = [point1, point2];
 
   /*____________________________Player Movement_____________________________________*/
   Player.prototype.moveX = function(player, currentKey) {
@@ -194,7 +200,7 @@ window.onload = function() {
   //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
   
-  var scoreBoard = new Frame('scoreB', 750, 0, 150, 50);
+  var scoreBoard = new Frame('scoreB', 750, 5, 125, 40);
   var sb = domSelector('.gameHeader');
   sb=sb[0];
   console.log(sb);
