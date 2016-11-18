@@ -30,14 +30,11 @@ this.tag.id = id;
 this.name = name;
 this.x=x;
 this.y=y;
-this.w=this.x+100;
-this.h=this.y+100;
+this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+100+'px'+';height:'+100+'px');
 this.score=score;
-
-
 }
-var player1 = new Player('p1',user1name,0,0,0);
-var player2 = new Player('p2',user2name,10,400,0);
+var player1 = new Player('p1',user1name,0,425,0);
+var player2 = new Player('p2',user2name,0,425,0);
 
 /*____________________________Structure Objects_____________________________________*/
 function Frame(cl,x,y,w,h){
@@ -49,7 +46,7 @@ this.tag.setAttribute('style','left:'+x+'px'+';top:'+y+'px'+';width:'+w+'px'+';h
 this.h = h;
 this.w = w;
 }
-var floor = new Frame('floor',0,525,888,75);
+var floor = new Frame('floor',0,525,900,75);
 var plat1 = new Frame('platform',0,201,200,50);
 var plat2 = new Frame('platform',350,201,200,50);
 
@@ -59,40 +56,42 @@ var objects = [floor,plat1,plat2];
 //create objective object (player obtains these or passes by them)
 //figure out how to make unique objective items based on current player
 var point1=new Frame('point',10,150,50,50);
+var point2 = new Frame('point',360,150,50,50);
 
-var point = [point1];
+var point = [point1,point2];
 
 /*_______________________collision_________________________________*/
 function collision(player){
 	for(var i=0;i<objects.length;i++){
-var check = player.x+player.w>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+player.h>objects[i].y && player.y<objects[i].y+objects[i].h;
+var check = player.x+100>objects[i].x && player.x<objects[i].x+objects[i].w && player.y+100>objects[i].y && player.y<objects[i].y+objects[i].h;
 		if(check){
-	console.log('collision!!!!!!!');
+	console.log('collision!!!!!!!'+i);
 		return true;
 		}
 	}
 }
 function collect(player){
 	for(var i=0;i<point.length;i++){
-var check = player.x+player.w>point[i].x && player.x<point[i].x+point[i].w && player.y+player.h>point[i].y && player.y<point[i].y+point[i].h;
-		if(check){
+var check = player.x+100>point[i].x && player.x<point[i].x+point[i].w && player.y+100>point[i].y && player.y<point[i].y+point[i].h;
+		if(check&&point[i]!==null){
+			player.score++;
+			console.log(player.score);
 	console.log('collect objective!!!!!!!');
+	var rm = point[i].tag;
+	point[i]= '';			///removes point from array
+	rm.parentNode.removeChild(rm);		//removes from board
 		}
 	}
 }
 /*____________________________Board ____________________________________________*/
-//√√create floor 
-//√√create platforms
-//√√√call and place *current player* (if turn===...)
 function onBoard(player, frame){
-//console.log(player.tag.id);
-
 board.append(player.tag);
 board.append(floor.tag);
 board.append(plat1.tag);
 board.append(plat2.tag);
 board.append(point1.tag);
-//console.log(this.frame);
+board.append(point2.tag);
+
 }
 /*____________________________Turn_______________________________________________*/
 //this is where the events during the turn will go (player onboard,setTimer,score>player,turnEnd)
@@ -119,7 +118,6 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		}else if(collision(player)===true){
 			player.x = player.x+20;
 		}else if(collect(player)===true){
-			
 		}else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
 		}
@@ -130,6 +128,7 @@ if(currentKey===37){			//checkes keypress for left arrow (currentKey in moveX())
 		player.x = player.x =800;
 		} else if(collision(player)===true){
 		player.x = player.x-20;
+		}else if(collect(player)===true){
 		}else{
 		currentId.setAttribute('style','left:'+player.x+'px'+';top:'+player.y+'px');
 		}
@@ -146,6 +145,7 @@ Player.prototype.moveY=function(player,currentKey){
 		player.y=0;
 		}else if(collision(player)===true){
 		player.y = player.y+20;
+		}else if(collect(player)===true){
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
 		}
@@ -156,6 +156,7 @@ Player.prototype.moveY=function(player,currentKey){
 		player.y=500;
 		}else if(collision(player)===true){
 		player.y = player.y-20;
+		}else if(collect(player)===true){
 		}else{
 		currentId.setAttribute('style','top:'+player.y+'px'+';left:'+player.x+'px');
 		}
@@ -172,7 +173,6 @@ function keyStuff(player) {
 		break;
 
 		case 39: 	//>
-		
 				player.moveX(player,currentKey);
 				event.preventDefault();	//prevents arrow from scrolling page
 				//console.log('>');	
@@ -189,6 +189,7 @@ function keyStuff(player) {
 				player.moveY(player,currentKey);
 		break;
 	}
+	console.log('px:'+player1.x+'py:'+player1.y);
 });	
 }
 keyStuff(player1);
@@ -199,6 +200,9 @@ keyStuff(player1);
 //display (complete/total) objectives
 //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
+
+var scoreBoard=new Frame('scoreB',850,20,50,50);
+board.append(scoreBoard.tag);
 /*____________________________Timer_______________________________________*/
 //√√countdown timer
 //maybe: in a loading bar format
@@ -208,8 +212,8 @@ keyStuff(player1);
 /*function reset(){		//refreshes page
 	location.reload();
 }*/
-/*
-var count=5; //count to 60seconds
+
+var count=60; //count to 60seconds
 var countInterval = setInterval(timer,1000);	//1000ms===1s
 
 function timer(){
@@ -221,12 +225,12 @@ function timer(){
 	domSelector('#timer').innerHTML=count+" seconds";
 	if(count===0){
 		console.log('0000');	
-		sessionStorage.setITEM('player1', JSON.stringify(player1))						//save player info to sessionStorage
+		sessionStorage.setITEM('player1', JSON.stringify(player1));						//save player info to sessionStorage
 								//display results
 								//turn++
 	}
 }
-*/
+
 
 /*___________________________________________________________________________*/
 

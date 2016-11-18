@@ -45,7 +45,6 @@ background: black;
 margin:0 auto;
 }
 .floor{
-
 float: left;
 position: absolute;
 display: inline;
@@ -63,22 +62,24 @@ position: absolute;
 display: inline;
 background: blue;
 }
+.scoreB{
+	position: absolute;
+	display: inline;
+	background: pink;
+}
 
 /*_____________________________Player_________________________________*/
 #p1{
 	float:left;
 width: 100px;
 height: 100px;
-/*top:550px;*/
 background: red;
 position: relative;
 display: inline;
 }
 #p2{
-text-align: none;
 width: 100px;
 height: 100px;
-/*top:550px;*/
 background: blue;
 position: relative;
 display: inline-block;
