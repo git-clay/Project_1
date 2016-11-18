@@ -1,107 +1,70 @@
 window.onload = function() {
-  var retrievedObject =
-    sessionStorage.getItem('player1'); ////example of how to retrieve sessionstorage
-  console.log('retrievedObject: ',
-    JSON.parse(retrievedObject)); ///look at bottom
+  var retrievedObject = sessionStorage.getItem('player1'); ////example of how to retrieve sessionstorage
+//  console.log('retrievedObject: ', JSON.parse(retrievedObject)); ///look at bottom
 
   var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
-  var user1name = inputInfo.slice(10,
-    inputInfo.indexOf('&')); //slices ^ to get player1name
-  var user2name = inputInfo.slice(
-    inputInfo.indexOf('&') + 10); //slices to get player 2 name
-
+  var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
+  var user2name = inputInfo.slice(inputInfo.indexOf('&') + 10); //slices to get player 2 name
 
   var domSelector = function(element) { //function to search for id,class,or tag (element)
     var found;
     if (element[0] === '#') {
-      found = document.getElementById(
-        element.slice(1, element.length)
-      );
+      found = document.getElementById(element.slice(1, element.length));
     } else if (element[0] === '.') {
-      found = document.getElementsByClassName(
-        element.slice(1, element.length)
-      );
+      found = document.getElementsByClassName(element.slice(1, element.length));
     } else {
-      found = document.getElementsByTagName(
-        element);
+      found = document.getElementsByTagName(element);
     }
     return found;
   };
-  var board = domSelector(
-    ".htmlBoard");
+  var board = domSelector(".htmlBoard");
   board = board[0];
 
-
   /*____________________________Player Objects_____________________________________*/
-  function Player(id, name, x, y,
-    score) {
-    this.tag = document.createElement(
-      'div');
-    this.tag.setAttribute('class',
-      "playerAnimate");
+  function Player(id, name, x, y, score) {
+    this.tag = document.createElement('div');
+    this.tag.setAttribute('class', "playerAnimate");
     this.tag.id = id;
     this.name = name;
     this.x = x;
     this.y = y;
-    this.tag.setAttribute('style',
-      'left:' + x + 'px' + ';top:' +
-      y + 'px' + ';width:' + 100 +
-      'px' + ';height:' + 100 +
-      'px');
+    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 100 + 'px' + ';height:' +
+      100 + 'px');
     this.score = score;
   }
-  var player1 = new Player('p1',
-    user1name, 0, 425, 0);
-  var player2 = new Player('p2',
-    user2name, 0, 425, 0);
+  var player1 = new Player('p1', user1name, 0, 425, 0);
+  var player2 = new Player('p2', user2name, 0, 425, 0);
 
   /*____________________________Structure Objects_____________________________________*/
   function Frame(cl, x, y, w, h) {
-    this.tag = document.createElement(
-      'div');
+    this.tag = document.createElement('div');
     this.tag.setAttribute('class', cl);
     this.x = x;
     this.y = y;
-    this.tag.setAttribute('style',
-      'left:' + x + 'px' + ';top:' +
-      y + 'px' + ';width:' + w +
-      'px' + ';height:' + h + 'px');
+    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + w + 'px' + ';height:' + h +
+      'px');
     this.h = h;
     this.w = w;
   }
-  var floor = new Frame('floor', 0,
-    525, 900, 75);
-  var plat1 = new Frame('platform', 0,
-    201, 200, 50);
-  var plat2 = new Frame('platform',
-    350, 201, 200, 50);
+  var floor = new Frame('floor', 0, 525, 900, 75);
+  var plat1 = new Frame('platform', 0, 201, 200, 50);
+  var plat2 = new Frame('platform', 350, 201, 200, 50);
   var objects = [floor, plat1, plat2];
 
-
   /*____________________________Objective Objects___________________________*/
-  //create objective object (player obtains these or passes by them)
   //figure out how to make unique objective items based on current player
-  var point1 = new Frame(
-    'point pointAnimate', 10, 150,
-    50, 50);
-  var point2 = new Frame(
-    'point pointAnimate', 360, 150,
-    50, 50);
+  var point1 = new Frame('point pointAnimate', 10, 150, 50, 50);
+  var point2 = new Frame('point pointAnimate', 360, 150, 50, 50);
 
   var point = [point1, point2];
 
-  /*_______________________collision_________________________________*/
+  /*_______________________collision & collector_________________________________*/
   function collision(player) {
     for (var i = 0; i < objects.length; i++) {
-      var check = player.x + 100 >
-        objects[i].x && player.x <
-        objects[i].x + objects[i].w &&
-        player.y + 100 > objects[i].y &&
-        player.y < objects[i].y +
-        objects[i].h;
+      var check = player.x + 100 > objects[i].x && player.x < objects[i].x + objects[i].w && player.y + 100 > objects[
+        i].y && player.y < objects[i].y + objects[i].h;
       if (check) {
-        console.log(
-          'collision!!!!!!!' + i);
+        console.log('collision!!!!!!!' + i);
         return true;
       }
     }
@@ -109,20 +72,13 @@ window.onload = function() {
 
   function collect(player) {
     for (var i = 0; i < point.length; i++) {
-      var check = player.x + 100 >
-        point[i].x && player.x <
-        point[i].x + point[i].w &&
-        player.y + 100 > point[i].y &&
-        player.y < point[i].y + point[
-          i].h;
+      var check = player.x + 100 > point[i].x && player.x < point[i].x + point[i].w && player.y + 100 > point[i].y &&
+        player.y < point[i].y + point[i].h;
       if (check && point[i] !== null) {
         player.score++;
         console.log(player.score);
-        scoreBoard.tag.innerHTML =
-          player1.score;
-        console.log(
-          'collect objective!!!!!!!'
-        );
+        scoreBoard.tag.innerHTML = player.score;
+        console.log('collect objective!!!!!!!');
         var rm = point[i].tag;
         point[i] = ''; ///removes point from array
         rm.parentNode.removeChild(rm); //removes from board
@@ -144,147 +100,103 @@ window.onload = function() {
   var currentTurn = 1; // even=player1 , odd=player 2
   // maybe needs a button to start? or on window load
   if (currentTurn % 2 === 0) { //is even
-    //player 1 functions
     onBoard(player1); //setTimer onBoard
-    score(player1); //score onBoard
+   // score(player1); //score onBoard
     keyStuff(player1);
   } else if (currentTurn % 2 === 1) {
-    //player 2 functions
     onBoard(player2);
-    score(player2);
+   // score(player2);
     keyStuff(player2);
   }
 
   /*____________________________Player Movement_____________________________________*/
-  Player.prototype.moveX = function(
-    player, currentKey) {
-    var currentId = document.getElementById(
-      player.tag.id);
+  Player.prototype.moveX = function(player, currentKey) {
+    var currentId = document.getElementById(player.tag.id);
+    var att=('left:' + player.x + 'px' + ';top:' + player.y + 'px');
     if (currentKey === 37) { //checkes keypress for left arrow (currentKey in moveX()) left=++
-      player.x = player.x -= 20;
       if (player.x < 0) { //checks x position of player to determin if out of bounds
-        console.log('out of bounds' +
-          player.x);
+        console.log('out of bounds' + player.x);
         player.x = 0;
-      } else if (collision(player) ===
-        true) {
+      } else if (collision(player) === true) {
         player.x = player.x + 20;
-      } else if (collect(player) ===
-        true) {} else {
-        currentId.setAttribute(
-          'style', 'left:' +
-          player.x + 'px' +
-          ';top:' + player.y +
-          'px');
+      } else if (collect(player) === true) {} else {
+        currentId.setAttribute('style', att);
       }
     } else if (currentKey === 39) { //checks for right arrow press left = --
-      player.x = player.x += 20;
       if (player.x > 800) {
-        console.log('out of bounds' +
-          player.x);
+        console.log('out of bounds' + player.x);
         player.x = player.x = 800;
-      } else if (collision(player) ===
-        true) {
+      } else if (collision(player) === true) {
         player.x = player.x - 20;
-      } else if (collect(player) ===
-        true) {} else {
-        currentId.setAttribute(
-          'style', 'left:' +
-          player.x + 'px' +
-          ';top:' + player.y +
-          'px');
+      } else if (collect(player) === true) {} else {
+        console.log(att);
+        currentId.setAttribute('style',att);
       }
     }
   };
-  Player.prototype.moveY = function(
-    player, currentKey) {
-    var currentId = document.getElementById(
-      player.tag.id);
+  Player.prototype.moveY = function(player, currentKey) {
+    var currentId = document.getElementById(player.tag.id);
+    var att=('left:' + player.x + 'px' + ';top:' + player.y + 'px');
     if (currentKey === 38) { //checkes keypress for up arrow (currentKey in moveX()) top=++
-      player.y = player.y -= 20;
       if (player.y < 0) {
-        console.log('out of bounds' +
-          player.y);
+        console.log('out of bounds' + player.y);
         player.y = 0;
-      } else if (collision(player) ===
-        true) {
+      } else if (collision(player) === true) {
         player.y = player.y + 20;
-      } else if (collect(player) ===
-        true) {} else {
-        currentId.setAttribute(
-          'style', 'top:' +
-          player.y + 'px' +
-          ';left:' + player.x +
-          'px');
+      } else if (collect(player) === true) {} else {
+        currentId.setAttribute('style', att);
       }
     } else if (currentKey === 40) { //checks for down arrow press top = --
-      player.y = player.y += 20;
       if (player.y > 500) {
-        console.log('out of bounds' +
-          player.y);
+        console.log('out of bounds' + player.y);
         player.y = 500;
-      } else if (collision(player) ===
-        true) {
+      } else if (collision(player) === true) {
         player.y = player.y - 20;
-      } else if (collect(player) ===
-        true) {} else {
-        currentId.setAttribute(
-          'style', 'top:' +
-          player.y + 'px' +
-          ';left:' + player.x +
-          'px');
+      } else if (collect(player) === true) {} else {
+        currentId.setAttribute('style', att);
       }
     }
   };
 
   function keyStuff(player) {
-    document.addEventListener(
-      'keydown',
-      function(event) { //looks for a keypress>>passes # for corrasponding keyCode
-        var currentKey = event.keyCode;
-        if (event.keyCode !== 82) {
-          event.preventDefault(); //prevents arrow from scrolling page
-          switch (event.keyCode) {
-            case 37: //<
-              player.moveX(player,
-                currentKey); //calls move() which appends style
-              break;
+    document.addEventListener('keydown', function(event) { //looks for a keypress>>passes # for corrasponding keyCode
+      var currentKey = event.keyCode;
+      if (event.keyCode !== 82) {
+        event.preventDefault(); //prevents arrow from scrolling page
+        switch (event.keyCode) {
+          case 37: //<
+            player.x = player.x -= 20;
+            player.moveX(player, currentKey); //calls move() which appends style
+            break;
 
-            case 39: //>
-              player.moveX(player,
-                currentKey);
-              //console.log('>');	
-              break;
+          case 39: //>
+            player.x = player.x += 20;
+            player.moveX(player, currentKey);
+            break;
 
-            case 38: //^
-              player.moveY(player,
-                currentKey);
-              break;
+          case 38: //^
+            player.y = player.y -= 20;
+            player.moveY(player, currentKey);
+            break;
 
-            case 40: //v
-              //prevents arrow from scrolling page
-              player.moveY(player,
-                currentKey);
-              break;
-          }
-          console.log('px:' +
-            player.x + 'py:' +
-            player.y);
+          case 40: //v
+            player.y = player.y += 20;
+            player.moveY(player, currentKey);
+            break;
         }
-      });
+        console.log('px:' + player.x + 'py:' + player.y);
+      }
+    });
   }
 
   /*____________________________Score_______________________________________*/
   //display (complete/total) objectives
   //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
-  function score(player) {
-    var scoreBoard = new Frame(
-      'scoreB', 750, 20, 150, 50);
-    board.append(scoreBoard.tag);
-    scoreBoard.tag.innerHTML = player
-      .score;
-  }
+  
+  var scoreBoard = new Frame('scoreB', 750, 20, 150, 50);
+  board.append(scoreBoard.tag);
+  scoreBoard.tag.innerHTML = 0;
 
   function reset() { //refreshes page
     location.reload();
@@ -294,36 +206,27 @@ window.onload = function() {
   //maybe: in a loading bar format
   //√√00:00 >> end of turn
   //pop-up window to display score and other info about turn
-  //***** store player info with sessionStorage *******
-  /*
-  }*/
   /*
   var count=2; //count to 60seconds
-  var countInterval = setInterval(timer,1000);	//1000ms===1s
+  var countInterval = setInterval(timer,1000);  //1000ms===1s
   function timer(player){
-  	count -=1;
-  	if(count<0){
-  		clearInterval(countInterval);
-  		return;
-  	}
-  	domSelector('#timer').innerHTML=count+" seconds";
-  	if(count===0){
-  		sessionStorage.setItem('player1', JSON.stringify(player1));						//save player info to sessionStorage
-  		alert('Your score was: '+player2.score);					//display results
-  		currentTurn++;	
-  	reset();
-  	}
+    count -=1;
+    if(count<0){
+      clearInterval(countInterval);
+      return;
+    }
+    domSelector('#timer').innerHTML=count+" seconds";
+    if(count===0){
+      sessionStorage.setItem(player.id, JSON.stringify(player)); //save player info to sessionStorage
+      alert('Your score was: '+player.score);          //display results
+      currentTurn++;  
+    reset();
+    }
   }*/
-
-
-  /*___________________________________________________________________________*/
-
 };
 
-
-
-/*document.addEventListener('keydown',function(event){			///finds the keycode of each key pressed
-	console.log(event.which);
+/*document.addEventListener('keydown',function(event){      ///finds the keycode of each key pressed
+  console.log(event.which);
 });*/
 //"< arrow" = 37
 //"> arrow" = 39
