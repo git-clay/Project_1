@@ -76,6 +76,7 @@ var check = player.x+100>point[i].x && player.x<point[i].x+point[i].w && player.
 		if(check&&point[i]!==null){
 			player.score++;
 			console.log(player.score);
+			scoreBoard.tag.innerHTML=player1.score;
 	console.log('collect objective!!!!!!!');
 	var rm = point[i].tag;
 	point[i]= '';			///removes point from array
@@ -201,8 +202,10 @@ keyStuff(player1);
 //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
 
-var scoreBoard=new Frame('scoreB',850,20,50,50);
+var scoreBoard=new Frame('scoreB',750,20,150,50);
 board.append(scoreBoard.tag);
+console.log(scoreBoard.tag);
+scoreBoard.tag.innerHTML=player1.score;
 /*____________________________Timer_______________________________________*/
 //√√countdown timer
 //maybe: in a loading bar format
