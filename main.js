@@ -28,7 +28,7 @@ window.onload = function() {
     this.name = name;
     this.x = x;
     this.y = y;
-    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 100 + 'px' + ';height:' +
+    this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 72 + 'px' + ';height:' +
       100 + 'px');
     this.score = score;
   }
@@ -61,7 +61,7 @@ window.onload = function() {
   /*_______________________collision & collector_________________________________*/
   function collision(player) {
     for (var i = 0; i < objects.length; i++) {
-      var check = player.x + 100 > objects[i].x && player.x < objects[i].x + objects[i].w && player.y + 100 > objects[
+      var check = player.x + 72 > objects[i].x && player.x < objects[i].x + objects[i].w && player.y + 100 > objects[
         i].y && player.y < objects[i].y + objects[i].h;
       if (check) {
         console.log('collision!!!!!!!' + i);
@@ -72,7 +72,7 @@ window.onload = function() {
 
   function collect(player) {
     for (var i = 0; i < point.length; i++) {
-      var check = player.x + 100 > point[i].x && player.x < point[i].x + point[i].w && player.y + 100 > point[i].y &&
+      var check = player.x + 72 > point[i].x && player.x < point[i].x + point[i].w && player.y + 100 > point[i].y &&
         player.y < point[i].y + point[i].h;
       if (check && point[i] !== null) {
         player.score++;
@@ -97,7 +97,7 @@ window.onload = function() {
   }
   /*____________________________Turn_______________________________________________*/
   //this is where the events during the turn will go (player onboard,setTimer,score>player,turnEnd)
-  var currentTurn = 1; // even=player1 , odd=player 2
+  var currentTurn = 0; // even=player1 , odd=player 2
   // maybe needs a button to start? or on window load
   if (currentTurn % 2 === 0) { //is even
     onBoard(player1); //setTimer onBoard

@@ -74,19 +74,21 @@ background: blue;
 /*_____________________________Player_________________________________*/
 #p1{
 	float:left;
-width: 100px;
+width: 72px;
 height: 100px;
-background: red;
 position: relative;
 display: inline;
+background-image: url('images/fire.png')
+
 }
 #p2{
 	float:left;
-width: 100px;
+width: 72px;
 height: 100px;
-background: blue;
 position: relative;
 display: inline-block;
+background-image: url('images/water.png')
+
 }
 /*_____________________________animation_________________________________*/
 @keyframes playerAnimate{
@@ -138,5 +140,8 @@ color: rgba(220,40,40,1);
 font-weight: 700;
 }
 /*colors: 62d9f4(light blue),0bc3f2(med blue),004484(dark blue)*/
+/*colors: e3392b(light red),f2291c(med red),e30203(dark red)*/
+/*fcff60 yellow*/
+
 /*______________________________Mobile Friendly__________________________________*/
 
