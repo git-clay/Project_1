@@ -1,6 +1,6 @@
 window.onload=function(){
-	/*var retrievedObject = localStorage.getItem('testObject');		////example of how to retrieve sessionstorage
-console.log('retrievedObject: ', JSON.parse(retrievedObject));*/	///look at bottom
+var retrievedObject = sessionStorage.getItem('player1');		////example of how to retrieve sessionstorage
+console.log('retrievedObject: ', JSON.parse(retrievedObject));	///look at bottom
 
 var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
 var user1name = inputInfo.slice(10,inputInfo.indexOf('&')); //slices ^ to get player1name
@@ -204,7 +204,6 @@ keyStuff(player1);
 
 var scoreBoard=new Frame('scoreB',750,20,150,50);
 board.append(scoreBoard.tag);
-console.log(scoreBoard.tag);
 scoreBoard.tag.innerHTML=player1.score;
 /*____________________________Timer_______________________________________*/
 //√√countdown timer
@@ -216,7 +215,7 @@ scoreBoard.tag.innerHTML=player1.score;
 	location.reload();
 }*/
 
-var count=60; //count to 60seconds
+var count=2; //count to 60seconds
 var countInterval = setInterval(timer,1000);	//1000ms===1s
 
 function timer(){
@@ -227,10 +226,11 @@ function timer(){
 	}
 	domSelector('#timer').innerHTML=count+" seconds";
 	if(count===0){
-		console.log('0000');	
-		sessionStorage.setITEM('player1', JSON.stringify(player1));						//save player info to sessionStorage
+
+		sessionStorage.setItem('player1', JSON.stringify(player1));						//save player info to sessionStorage
 								//display results
 								//turn++
+
 	}
 }
 
