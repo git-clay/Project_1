@@ -100,8 +100,8 @@ window.onload = function() {
   var currentTurn = 0; // even=player1 , odd=player 2
   // maybe needs a button to start? or on window load
   if (currentTurn % 2 === 0) { //is even
-  var point1 = new Frame('firePoint point pointAnimate', 10, 135, 75, 129);
-  var point2 = new Frame('firePoint point pointAnimate', 360, 135, 75, 129);
+  var point1 = new Frame('firePoint point pointAnimate', 10, 160, 80, 114);
+  var point2 = new Frame('firePoint point pointAnimate', 360, 160, 80, 114);
     onBoard(player1); //setTimer onBoard
    // score(player1); //score onBoard
     keyStuff(player1);

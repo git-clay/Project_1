@@ -77,6 +77,10 @@ display: inline;
 	background-image: url('images/water-point.png');
 	background-repeat: no-repeat;
 }
+.firePoint{
+	background-image: url('images/fire-point.png');
+	background-repeat: no-repeat;
+}
 .scoreB{
 	position: absolute;
 	display: inline;
