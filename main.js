@@ -161,7 +161,7 @@ window.onload = function() {
   function keyStuff(player) {
     document.addEventListener('keydown', function(event) { //looks for a keypress>>passes # for corrasponding keyCode
       var currentKey = event.keyCode;
-      if (event.keyCode !== 82) {
+      if (event.keyCode !== 91 && event.keyCode !== 82 ) {
         event.preventDefault(); //prevents arrow from scrolling page
         switch (event.keyCode) {
           case 37: //<
@@ -194,8 +194,11 @@ window.onload = function() {
   //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
 
   
-  var scoreBoard = new Frame('scoreB', 750, 20, 150, 50);
-  board.append(scoreBoard.tag);
+  var scoreBoard = new Frame('scoreB', 750, 0, 150, 50);
+  var sb = domSelector('.gameHeader');
+  sb=sb[0];
+  console.log(sb);
+  sb.append(scoreBoard.tag);
   scoreBoard.tag.innerHTML = 0;
 
   function reset() { //refreshes page
