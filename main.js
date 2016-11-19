@@ -1,4 +1,4 @@
-var count = 10; //count to 60seconds
+var count = 20; //count to 60seconds
 var retrievedTurn = sessionStorage.getItem('currentTurn'); ////saved turn #
   var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
   var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
@@ -36,10 +36,17 @@ window.onload = function() {
   function onBoard(player, frame) {
     board.append(player.tag);
     board.append(floor.tag);
+
     board.append(plat1.tag);
     board.append(plat2.tag);
+    board.append(plat3.tag);
+    board.append(plat4.tag);
+
     board.append(point1.tag);
     board.append(point2.tag);
+    board.append(point3.tag);
+    board.append(point4.tag);
+    board.append(point5.tag);
 
   }
   /*____________________________Turn_______________________________________________*/
@@ -76,15 +83,42 @@ window.onload = function() {
     this.w = w;
   }
   var floor = new Frame('floor', 0, 525, 900, 75);
-  var plat1 = new Frame('platform', 0, 251, 200, 50);
-  var plat2 = new Frame('platform', 350, 251, 200, 50);
-  var objects = [floor, plat1, plat2];
+
+  var plat1 = new Frame('platform', 0, 351, 200, 50);
+  var plat2 = new Frame('platform', 450, 251, 200, 50);
+  var plat3 = new Frame('platform', 75, 110, 200, 50);
+  var plat4 = new Frame('platform', 690, 151, 200, 50);
+
+  var objects = [floor, plat1, plat2,plat3,plat4];
 
   /*____________________________Objective Objects___________________________*/
   //figure out how to make unique objective items based on current player
   //var point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
   // var point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);
+if (retrievedTurn % 2 === 0) { //is even
+    var point1 = new Frame('firePoint point pointAnimate', 10, 245, 80, 129);
+    var point2 = new Frame('firePoint point pointAnimate', 460, 145, 80, 129);
+    var point3 = new Frame('firePoint point pointAnimate', 800, 45, 80, 129);
+    var point4 = new Frame('firePoint point pointAnimate', 800, 445, 80, 129);
+    var point5 = new Frame('firePoint point pointAnimate', 75, 0, 80, 129);
+    onBoard(player1); 
 
+    timer(player1);
+    keyStuff(player1);
+  
+  } else if (retrievedTurn % 2 === 1) {
+    point1 = new Frame('waterPoint point pointAnimate', 10, 236, 75, 129);
+    point2 = new Frame('waterPoint point pointAnimate', 460, 135, 75, 129);
+    point3 = new Frame('waterPoint point pointAnimate', 800, 35, 75, 129);
+    point4 = new Frame('waterPoint point pointAnimate', 800, 425, 75, 129);
+    point5 = new Frame('waterPoint point pointAnimate', 75, 0, 75, 129);
+    onBoard(player2);
+    timer(player2);
+    // score(player2);
+    keyStuff(player2);
+  }
+  //   console.log(currentTurn);
+  var point = [point1, point2,point3,point4,point5];
   /*____________________________Score_______________________________________*/
   //display (complete/total) objectives
   //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
@@ -208,25 +242,7 @@ window.onload = function() {
   //maybe: in a loading bar format
   var countInterval = setInterval(timer, 1000); //1000ms===1s
 
-  if (retrievedTurn % 2 === 0) { //is even
-    var point1 = new Frame('firePoint point pointAnimate', 10, 145, 80, 129);
-    var point2 = new Frame('firePoint point pointAnimate', 360, 145, 80, 129);
-    onBoard(player1); //setTimer onBoard
-
-    timer(player1);
-    keyStuff(player1);
   
-  } else if (retrievedTurn % 2 === 1) {
-    point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
-    point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);
-
-    onBoard(player2);
-    timer(player2);
-    // score(player2);
-    keyStuff(player2);
-  }
-  //   console.log(currentTurn);
-  var point = [point1, point2];
 function timer(player) {
   count -= 1;
   // console.log(retrievedTurn);
