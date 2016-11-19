@@ -43,7 +43,6 @@ position: relative;
 height: 50px;
 width: 900px;
 margin:10px auto;
-background: #004484;
 opacity: .6;
 }
 .htmlBoard{
@@ -87,8 +86,31 @@ display: inline;
 	background: #fcff60;
 	opacity: .5;
 	font-size: 35px;
-	border-radius: 6px;
+	border-radius: 16px;
 }
+#timer{
+	margin: 0 auto;
+	height: 25px;
+	top:10px;
+	position: relative;
+	height: 25px;
+	color: white;
+	font-size: 40px;
+
+}
+.etimer{
+	height: 25px;
+	position: relative;
+	background: #555;
+	width: 40%;
+	
+	border: 2px solid gray;
+	border-radius: 20px;
+	box-shadow: 3px 2px black;
+
+}
+
+
 
 /*_____________________________Player_________________________________*/
 #p1{
