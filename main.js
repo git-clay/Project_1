@@ -1,11 +1,5 @@
-var count = 2; //count to 60seconds
-// var currentTurn = 1; // even=player1 , odd=player 2
-var retrievedTurn = sessionStorage.getItem('currentTurn'); ////example of how to retrieve sessionstorage
-console.log(retrievedTurn);
-var retrievedP1 = sessionStorage.getItem('retrievedP1'); ////example of how to retrieve sessionstorage
-var retrievedP2 = sessionStorage.getItem('retrievedP2'); ////example of how to retrieve sessionstorage
-console.log(retrievedP1 + ' ' + retrievedP2);
-//  console.log('retrievedObject: ', JSON.parse(retrievedObject)); ///look at bottom
+var count = 10; //count to 60seconds
+var retrievedTurn = sessionStorage.getItem('currentTurn'); ////saved turn #
 var domSelector = function(element) { //function to search for id,class,or tag (element)
   var found;
   if (element[0] === '#') {
@@ -64,7 +58,12 @@ window.onload = function() {
       100 + 'px');
     this.score = score;
   }
-  var player1 = new Player('p1', user1name, 0, 425, 0);
+  var p1Score = sessionStorage.getItem('p1Score'); ////example of how to retrieve sessionstorage
+
+  console.log(p1Score);
+  //console.log(p2Score);
+
+  var player1 = new Player('p1', user1name, 0, 425, 0,p1Score);
   var player2 = new Player('p2', user2name, 0, 425, 0);
 
   /*____________________________Structure Objects_____________________________________*/
@@ -209,8 +208,10 @@ window.onload = function() {
     var point1 = new Frame('firePoint point pointAnimate', 10, 160, 80, 114);
     var point2 = new Frame('firePoint point pointAnimate', 360, 160, 80, 114);
     onBoard(player1); //setTimer onBoard
+
     timer(player1);
     keyStuff(player1);
+   
     //  console.log(currentTurn);
 
   } else if (retrievedTurn % 2 === 1) {
@@ -228,17 +229,30 @@ function timer(player) {
   count -= 1;
   // console.log(retrievedTurn);
   if (count < 0) {
-    sessionStorage.setItem('retrievedP1', JSON.stringify(player1)); //save player info to sessionStorage
-    sessionStorage.setItem('retrievedP2', JSON.stringify(player2)); //save player info to sessionStorage
-
+    if(retrievedTurn%2===0){ ///after player1
+    sessionStorage.setItem('p1Score', JSON.stringify(player1.score)); //save player info to sessionStorage
+    alert(user2name+' get ready!');
+    }
+    else{
+      if(p1Score==player2.score){
+        alert('Tie\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+      }else if(p1Score>player2.score){
+        alert(user1name+' WINS!\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+      }else{
+        alert(user2name+' WINS!\n'+user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+      }
+    }
+    //sessionStorage.setItem('p1name', JSON.stringify(player1.name)); //save player info to sessionStorage
+   // sessionStorage.setItem('p2name', JSON.stringify(player2.name)); //save player info to sessionStorage
     //      alert(player.name+'Your score was: '+player.score);          //display results
     retrievedTurn++;
-    console.log(retrievedTurn);
-    sessionStorage.setItem('currentTurn', JSON.stringify(retrievedTurn)); //save player info to sessionStorage
+    //console.log(player1.score);
+    //    console.log(player2.score);
 
+    sessionStorage.setItem('currentTurn', JSON.stringify(retrievedTurn)); //save player info to sessionStorage
     clearInterval(countInterval);
     reset();
-    return;
+   // return;
   }
   domSelector('#timer').innerHTML = "0:" + count;
 }

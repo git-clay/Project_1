@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Ravi+Prakash" rel="stylesheet">
 	<link rel="stylesheet" href="style.css">
 	<script type="text/javascript" src="main.js"></script>
 	<title>Make Players</title>
 </head>
 <body>
 <h1>Pick your character</h1>
-<form action="gameboard.html" method="get">
+<form class="mkChar" action="gameboard.html" method="get">
 	<section class="makePlayer" id="left">
 		<h2>Player 1</h2>
-		<img src="">
+		<img src="images/fire.png">
 		<input class="in" type="text" name="Player 1" id="makep1">
 	</section>
 	<section class="makePlayer" id="right">
 		<h2>Player 2</h2>
-		<img src="">
+		<img src="images/water.png">
 		<input class="in" type="text" name="Player 2" id='makep2'>
 	</section>
 	<input class="btn" type="submit" value="Begin Game" onclick="location.href='gameboard.html'">
