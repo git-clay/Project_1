@@ -1,5 +1,10 @@
 var count = 10; //count to 60seconds
 var retrievedTurn = sessionStorage.getItem('currentTurn'); ////saved turn #
+  var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
+  var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
+  var user2name = inputInfo.slice(inputInfo.indexOf('&') + 10); //slices to get player 2 name
+
+
 var domSelector = function(element) { //function to search for id,class,or tag (element)
   var found;
   if (element[0] === '#') {
@@ -38,14 +43,7 @@ window.onload = function() {
 
   }
   /*____________________________Turn_______________________________________________*/
-  //this is where the events during the turn will go (player onboard,setTimer,score>player,turnEnd)
-  // maybe needs a button to start? or on window load
 
-  var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
-  var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
-  var user2name = inputInfo.slice(inputInfo.indexOf('&') + 10); //slices to get player 2 name
-
-  var countInterval = setInterval(timer, 1000); //1000ms===1s
   /*____________________________Player Objects_____________________________________*/
   function Player(id, name, x, y, score) {
     this.tag = document.createElement('div');
@@ -104,7 +102,7 @@ window.onload = function() {
   }
 
   function collect(player) {
-    for (var i = 0; i < point.length; i++) {
+    for (var i = 0; i < point.length; i++) {  //point is an array to store points available
       var check = player.x + 72 > point[i].x && player.x < point[i].x + point[i].w && player.y + 100 > point[i].y &&
         player.y < point[i].y + point[i].h;
       if (check && point[i] !== null) {
@@ -114,7 +112,13 @@ window.onload = function() {
         console.log('collect objective!!!!!!!');
         var rm = point[i].tag;
         point[i] = ''; ///removes point from array
-        rm.parentNode.removeChild(rm); //removes from board
+       // rm.parentNode.removeChild(rm); //removes from board
+        //change class of object
+        if(player.tag.id==='p1'){
+         rm.setAttribute('class', 'fireAfter point pointAnimate');
+       } else {
+        rm.setAttribute('class', 'waterAfter point pointAnimate');
+       }
       }
     }
   }
@@ -201,19 +205,17 @@ window.onload = function() {
   }
 
   /*____________________________Timer_______________________________________*/
-  //√√countdown timer
   //maybe: in a loading bar format
-  //pop-up window to display score and other info about turn
+  var countInterval = setInterval(timer, 1000); //1000ms===1s
+
   if (retrievedTurn % 2 === 0) { //is even
-    var point1 = new Frame('firePoint point pointAnimate', 10, 160, 80, 114);
-    var point2 = new Frame('firePoint point pointAnimate', 360, 160, 80, 114);
+    var point1 = new Frame('firePoint point pointAnimate', 10, 145, 80, 129);
+    var point2 = new Frame('firePoint point pointAnimate', 360, 145, 80, 129);
     onBoard(player1); //setTimer onBoard
 
     timer(player1);
     keyStuff(player1);
-   
-    //  console.log(currentTurn);
-
+  
   } else if (retrievedTurn % 2 === 1) {
     point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
     point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);

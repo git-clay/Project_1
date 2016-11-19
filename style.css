@@ -82,8 +82,16 @@ display: inline;
 	background-image: url('images/water-point.png');
 	background-repeat: no-repeat;
 }
+.waterAfter{
+background-image: url('images/water-anim.png');
+	background-repeat: no-repeat;
+}
 .firePoint{
 	background-image: url('images/fire-point.png');
+	background-repeat: no-repeat;
+}
+.fireAfter{
+	background-image: url('images/fire-anim.png');
 	background-repeat: no-repeat;
 }
 .scoreB{
