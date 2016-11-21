@@ -1,9 +1,9 @@
-var count = 20; //count to 60seconds
+var count = 20; //how long the timer runs
 var retrievedTurn = sessionStorage.getItem('currentTurn'); ////saved turn #
   var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
   var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
   var user2name = inputInfo.slice(inputInfo.indexOf('&') + 10); //slices to get player 2 name
-
+console.log(retrievedTurn);
 
 var domSelector = function(element) { //function to search for id,class,or tag (element)
   var found;

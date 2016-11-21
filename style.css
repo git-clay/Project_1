@@ -108,18 +108,29 @@ display: inline;
 .waterPoint{
 	background-image: url('images/water-point.png');
 	background-repeat: no-repeat;
+
 }
 .waterAfter{
 background-image: url('images/water-anim.png');
 	background-repeat: no-repeat;
+animation-name: pointAnimate;
+animation-duration: .1s;
+animation-iteration-count: 2;
+
+
 }
 .firePoint{
 	background-image: url('images/fire-point.png');
 	background-repeat: no-repeat;
+
+
 }
 .fireAfter{
 	background-image: url('images/fire-anim.png');
 	background-repeat: no-repeat;
+animation-name: pointAnimate;
+animation-duration: .1s;
+animation-iteration-count: 2;
 }
 
 
@@ -149,13 +160,23 @@ background-image: url('images/water.png')
     40% {transform: translateY(-30px);}
     60% {transform: translateY(-15px);}
 }
-.playerAnimate{
-animation-name: playerAnimate;
-}
+
 @keyframes pointAnimate{
-	
+	0%{
+	transform: translateX(0px);
+	}
+	50%{
+	transform: translateX(-5px);
+	}
+	100%{
+	transform: translateX(5px);
+	}
+	50%{	transform: translateX(-5px);
 }
-.pointAnimate{
+	0%{
+	transform: translateX(5px);
+	}
+}
 
 }
 @keyframes hazardAnimate{
