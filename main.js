@@ -135,7 +135,7 @@ window.onload = function() { //waits for the page to load, then runs this
         player.y < point[i].y + point[i].h; //checks players position compares to point positions
       if (check && point[i] !== null) {
         player.score++; //adds to players score
-        scoreBoard.tag.innerHTML = player.score; //puts new score on board
+        scoreBoard.tag.innerHTML = player.score + "/"+point.length; //puts new score on board
         console.log('collect objective!!!!!!!');
         var rm = point[i].tag;  //identifies which point was interacted with
         point[i] = ''; ///removes point from array
