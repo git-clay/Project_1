@@ -49,7 +49,31 @@ position: relative;
 height: 50px;
 width: 900px;
 margin:10px auto;
-opacity: .6;
+opacity: .9;
+}
+.name{
+display: inline;
+color: white;
+float: left;
+font-size: 30px;
+padding: .5% 0 0 10%;
+
+}
+.scoreB{
+position: absolute;
+display: inline;
+background: #fcff60;
+opacity: .8;
+font-size: 35px;
+border-radius: 16px;
+}
+#timer{
+margin: 0 auto;
+height: 25px;
+position: relative;
+top:-10px;
+color: white;
+font-size: 55px;
 }
 .htmlBoard{
 display: block;
@@ -59,6 +83,7 @@ width: 900px;
 border: 3px solid gray;
 margin:0 auto;
 }
+/*_____________object images________*/
 .floor{
 float: left;
 position: absolute;
@@ -72,6 +97,8 @@ display: inline;
 background-image: url('images/beam.png');
 background-repeat: no-repeat;
 }
+
+/*______________instructs JS how to change images with point interactions_____*/
 .point{
 float:left;
 position: absolute;
@@ -94,41 +121,12 @@ background-image: url('images/water-anim.png');
 	background-image: url('images/fire-anim.png');
 	background-repeat: no-repeat;
 }
-.scoreB{
-	position: absolute;
-	display: inline;
-	background: #fcff60;
-	opacity: 1;
-	font-size: 35px;
-	border-radius: 16px;
-}
-#timer{
-	margin: 0 auto;
-	height: 25px;
-	top:10px;
-	position: relative;
-	height: 25px;
-	color: white;
-	font-size: 40px;
-
-}
-.etimer{
-	height: 25px;
-	position: relative;
-	background: #555;
-	width: 40%;
-	
-	border: 2px solid gray;
-	border-radius: 20px;
-	box-shadow: 3px 2px black;
-
-}
 
 
 
 /*_____________________________Player_________________________________*/
 #p1{
-	float:left;
+float:left;
 width: 73.5px;
 height: 100px;
 position: relative;
@@ -137,7 +135,7 @@ background-image: url('images/fire.png')
 
 }
 #p2{
-	float:left;
+float:left;
 width: 72px;
 height: 100px;
 position: relative;
@@ -216,5 +214,4 @@ margin: 1%;
 /*colors: e3392b(light red),f2291c(med red),e30203(dark red)*/
 /*fcff60 yellow*/
 
-/*______________________________Mobile Friendly__________________________________*/
 

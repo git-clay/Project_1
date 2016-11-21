@@ -16,27 +16,28 @@ var domSelector = function(element) { //function to search for id,class,or tag (
   }
   return found;
 };
-var board = domSelector(".htmlBoard");
-board = board[0];
 
-window.onload = function() {
+window.onload = function() { //waits for the page to load, then runs this
 
   var scoreBoard = new Frame('scoreB', 750, 5, 125, 40);
   var sb = domSelector('.gameHeader');
   sb = sb[0];
-  // console.log(sb);
+  var nameInHeader = domSelector ('.name');
+  nameInHeader = nameInHeader[0];
+  nameInHeader.innerHTML = user1name;
+
   sb.append(scoreBoard.tag);
+
   scoreBoard.tag.innerHTML = 0;
-  // currentTurn++;
   var board = domSelector(".htmlBoard");
-  board = board[0];
-  //   console.log(currentTurn);
+  board = board[0]; //stores the dom board for easy access later
+
 
   /*____________________________Board ____________________________________________*/
   function onBoard(player, frame) {
     board.append(player.tag);
     board.append(floor.tag);
-
+    
     board.append(plat1.tag);
     board.append(plat2.tag);
     board.append(plat3.tag);
@@ -49,9 +50,9 @@ window.onload = function() {
     board.append(point5.tag);
 
   }
-  /*____________________________Turn_______________________________________________*/
+  
 
-  /*____________________________Player Objects_____________________________________*/
+  /*____________________________Player Constructor and make players_____________________________________*/
   function Player(id, name, x, y, score) {
     this.tag = document.createElement('div');
     this.tag.setAttribute('class', "playerAnimate");
@@ -60,13 +61,11 @@ window.onload = function() {
     this.x = x;
     this.y = y;
     this.tag.setAttribute('style', 'left:' + x + 'px' + ';top:' + y + 'px' + ';width:' + 72.5 + 'px' + ';height:' +
-      100 + 'px');
+      100 + 'px');  //places player on board by appending css style
     this.score = score;
   }
-  var p1Score = sessionStorage.getItem('p1Score'); ////example of how to retrieve sessionstorage
+  var p1Score = sessionStorage.getItem('p1Score'); ////saves previous p1 score
 
-  console.log(p1Score);
-  //console.log(p2Score);
 
   var player1 = new Player('p1', user1name, 0, 425, 0,p1Score);
   var player2 = new Player('p2', user2name, 0, 425, 0);
@@ -82,20 +81,19 @@ window.onload = function() {
     this.h = h;
     this.w = w;
   }
-  var floor = new Frame('floor', 0, 525, 900, 75);
+  var floor = new Frame('floor', 0, 525, 900, 75);  //floor player cannot move through
 
-  var plat1 = new Frame('platform', 0, 351, 200, 50);
+  var plat1 = new Frame('platform', 0, 351, 200, 50);   ///platforms that player cannot move through
   var plat2 = new Frame('platform', 450, 251, 200, 50);
   var plat3 = new Frame('platform', 75, 110, 200, 50);
   var plat4 = new Frame('platform', 690, 151, 200, 50);
 
   var objects = [floor, plat1, plat2,plat3,plat4];
 
-  /*____________________________Objective Objects___________________________*/
-  //figure out how to make unique objective items based on current player
-  //var point1 = new Frame('waterPoint point pointAnimate', 10, 135, 75, 129);
-  // var point2 = new Frame('waterPoint point pointAnimate', 360, 135, 75, 129);
-if (retrievedTurn % 2 === 0) { //is even
+
+  /*_________________________determines turn makes points accordingly___________*/
+  if (retrievedTurn % 2 === 0) { //is even
+
     var point1 = new Frame('firePoint point pointAnimate', 10, 245, 80, 129);
     var point2 = new Frame('firePoint point pointAnimate', 460, 145, 80, 129);
     var point3 = new Frame('firePoint point pointAnimate', 800, 45, 80, 129);
@@ -106,7 +104,8 @@ if (retrievedTurn % 2 === 0) { //is even
     timer(player1);
     keyStuff(player1);
   
-  } else if (retrievedTurn % 2 === 1) {
+   } else if (retrievedTurn % 2 === 1) {
+
     point1 = new Frame('waterPoint point pointAnimate', 10, 236, 75, 129);
     point2 = new Frame('waterPoint point pointAnimate', 460, 135, 75, 129);
     point3 = new Frame('waterPoint point pointAnimate', 800, 35, 75, 129);
@@ -120,35 +119,30 @@ if (retrievedTurn % 2 === 0) { //is even
   //   console.log(currentTurn);
   var point = [point1, point2,point3,point4,point5];
   /*____________________________Score_______________________________________*/
-  //display (complete/total) objectives
-  //maybe: OOOOO(start) >>> XOOOO(after one objective) like hearts in zelda
+ 
 
   /*_______________________collision & collector_________________________________*/
-  function collision(player) {
+  function collision(player) {    //detects when player interacts with solid objects, does not let player move through
     for (var i = 0; i < objects.length; i++) {
       var check = player.x + 72 > objects[i].x && player.x < objects[i].x + objects[i].w && player.y + 100 > objects[
-        i].y && player.y < objects[i].y + objects[i].h;
+        i].y && player.y < objects[i].y + objects[i].h;  //checks player x&y and compares to objects
       if (check) {
         console.log('collision!!!!!!!' + i);
         return true;
       }
     }
   }
-
   function collect(player) {
     for (var i = 0; i < point.length; i++) {  //point is an array to store points available
       var check = player.x + 72 > point[i].x && player.x < point[i].x + point[i].w && player.y + 100 > point[i].y &&
-        player.y < point[i].y + point[i].h;
+        player.y < point[i].y + point[i].h; //checks players position compares to point positions
       if (check && point[i] !== null) {
-        player.score++;
-        console.log(player.score);
-        scoreBoard.tag.innerHTML = player.score;
+        player.score++; //adds to players score
+        scoreBoard.tag.innerHTML = player.score; //puts new score on board
         console.log('collect objective!!!!!!!');
-        var rm = point[i].tag;
+        var rm = point[i].tag;  //identifies which point was interacted with
         point[i] = ''; ///removes point from array
-       // rm.parentNode.removeChild(rm); //removes from board
-        //change class of object
-        if(player.tag.id==='p1'){
+        if(player.tag.id==='p1'){  //changes class for p1 or p2 to make correct animation
          rm.setAttribute('class', 'fireAfter point pointAnimate');
        } else {
         rm.setAttribute('class', 'waterAfter point pointAnimate');
@@ -165,9 +159,9 @@ if (retrievedTurn % 2 === 0) { //is even
       if (player.x < 0) { //checks x position of player to determin if out of bounds
         console.log('out of bounds' + player.x);
         player.x = 0;
-      } else if (collision(player) === true) {
+      } else if (collision(player) === true) {  //checks for collision and regresses position back to last place
         player.x = player.x + 20;
-      } else if (collect(player) === true) {} else {
+      } else if (collect(player) === true) {} else { //if interacting with a point
         currentId.setAttribute('style', att);
       }
     } else if (currentKey === 39) { //checks for right arrow press left = --
@@ -189,7 +183,7 @@ if (retrievedTurn % 2 === 0) { //is even
       if (player.y < 0) {
         console.log('out of bounds' + player.y);
         player.y = 0;
-      } else if (collision(player) === true) {
+      } else if (collision(player) === true) {    
         player.y = player.y + 20;
       } else if (collect(player) === true) {} else {
         currentId.setAttribute('style', att);
@@ -233,48 +227,39 @@ if (retrievedTurn % 2 === 0) { //is even
             break;
         }
         console.log('px:' + player.x + 'py:' + player.y);
-
       }
     });
   }
 
   /*____________________________Timer_______________________________________*/
-  //maybe: in a loading bar format
-  var countInterval = setInterval(timer, 1000); //1000ms===1s
+    var countInterval = setInterval(timer, 1000); //1000ms===1s
 
   
-function timer(player) {
-  count -= 1;
-  // console.log(retrievedTurn);
-  if (count < 0) {
-    if(retrievedTurn%2===0){ ///after player1
-    sessionStorage.setItem('p1Score', JSON.stringify(player1.score)); //save player info to sessionStorage
-    alert(user2name+' get ready!');
-    }
-    else{
-      if(p1Score==player2.score){
-        alert('Tie\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
-      }else if(p1Score>player2.score){
-        alert(user1name+' WINS!\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
-      }else{
-        alert(user2name+' WINS!\n'+user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
-      }
-    }
-    //sessionStorage.setItem('p1name', JSON.stringify(player1.name)); //save player info to sessionStorage
-   // sessionStorage.setItem('p2name', JSON.stringify(player2.name)); //save player info to sessionStorage
-    //      alert(player.name+'Your score was: '+player.score);          //display results
-    retrievedTurn++;
-    //console.log(player1.score);
-    //    console.log(player2.score);
+    function timer(player) {
+      count -= 1;  //how much time passes each itteration
+      if (count < 0) {
+        if(retrievedTurn%2===0){ ///after player1
+        sessionStorage.setItem('p1Score', JSON.stringify(player1.score)); //save player info to sessionStorage
+        alert(user2name+' get ready!');  //break between players
+        }
+        else{
+          if(p1Score==player2.score){ //tie condition
+            alert('Tie\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+          }else if(p1Score>player2.score){ //p1 win condition
+            alert(user1name+' WINS!\n'+ user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+          }else{ //p2 win condition
+            alert(user2name+' WINS!\n'+user1name+' ignited '+p1Score+' fire(s)! ' +user2name + ' extinguished '+player2.score + ' fire(s)!');
+          }
+        }
+        retrievedTurn++; //adds 1 to current turn
 
-    sessionStorage.setItem('currentTurn', JSON.stringify(retrievedTurn)); //save player info to sessionStorage
-    clearInterval(countInterval);
-    reset();
-   // return;
+        sessionStorage.setItem('currentTurn', JSON.stringify(retrievedTurn)); //save player info to sessionStorage
+        clearInterval(countInterval);
+        reset();  // calls page reset at the end of each turn
+      }
+      domSelector('#timer').innerHTML = count; //timer on board and update 
   }
-  domSelector('#timer').innerHTML = "0:" + count;
-}
-};
+}; //end of onLoad
 
 function reset() { //refreshes page
   location.reload();
