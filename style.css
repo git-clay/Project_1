@@ -157,18 +157,18 @@ background-image: url('images/water.png')
 /*_____________________________animation_________________________________*/
 .playerAnimateL{
 	animation-name: playerAnimateL;
-	animation-duration: .5s;
+	animation-duration: .3s;
 }
 .playerAnimateR{
 	animation-name: playerAnimateR;
-	animation-duration: .5s;
+	animation-duration: .3s;
 }
 @keyframes playerAnimateL{
 	0%{
 	transform: translateX(0px);
 	}
 	100%{
-	transform: translateX(-2px);
+	transform: translateX(-3px);
 	}
 }
 @keyframes playerAnimateR{
@@ -176,7 +176,7 @@ background-image: url('images/water.png')
 	transform: translateX(0px);
 	}
 	100%{
-	transform: translateX(2px);
+	transform: translateX(3px);
 	}
 }
 @keyframes pointAnimate{
@@ -197,26 +197,27 @@ background-image: url('images/water.png')
 }
 .playerAnimateU{
 	animation-name: playerAnimateU;
-	animation-duration: .5s;
+	animation-duration: .3s;
 }
 .playerAnimateD{
 	animation-name: playerAnimateD;
-	animation-duration: .5s;
+	animation-duration: .3s;
 }
 @keyframes playerAnimateU{
 	0%{
 	transform: translateY(0px);
 	}
 	100%{
-	transform: translateY(2px);
+	transform: translateY(3px);
 	}
+	
 }
 @keyframes playerAnimateD{
 	0%{
 	transform: translateY(0px);
 	}
 	100%{
-	transform: translateY(-2px);
+	transform: translateY(-3px);
 	}
 }
 }

@@ -170,7 +170,7 @@ window.onload = function() { //waits for the page to load, then runs this
       } else if (collision(player) === true) {
         player.x = player.x - 20;
       } else if (collect(player) === true) {} else {
-        console.log(att);
+        //console.log(att);
         currentId.setAttribute('style', att);
       }
     }
