@@ -155,12 +155,30 @@ background-image: url('images/water.png')
 
 }
 /*_____________________________animation_________________________________*/
-@keyframes playerAnimate{
-	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-30px);}
-    60% {transform: translateY(-15px);}
+.playerAnimateL{
+	animation-name: playerAnimateL;
+	animation-duration: .5s;
 }
-
+.playerAnimateR{
+	animation-name: playerAnimateR;
+	animation-duration: .5s;
+}
+@keyframes playerAnimateL{
+	0%{
+	transform: translateX(0px);
+	}
+	100%{
+	transform: translateX(-2px);
+	}
+}
+@keyframes playerAnimateR{
+	0%{
+	transform: translateX(0px);
+	}
+	100%{
+	transform: translateX(2px);
+	}
+}
 @keyframes pointAnimate{
 	0%{
 	transform: translateX(0px);
@@ -171,13 +189,36 @@ background-image: url('images/water.png')
 	100%{
 	transform: translateX(5px);
 	}
-	50%{	transform: translateX(-5px);
-}
+	50%{transform: translateX(-5px);
+	}
 	0%{
 	transform: translateX(5px);
 	}
 }
-
+.playerAnimateU{
+	animation-name: playerAnimateU;
+	animation-duration: .5s;
+}
+.playerAnimateD{
+	animation-name: playerAnimateD;
+	animation-duration: .5s;
+}
+@keyframes playerAnimateU{
+	0%{
+	transform: translateY(0px);
+	}
+	100%{
+	transform: translateY(2px);
+	}
+}
+@keyframes playerAnimateD{
+	0%{
+	transform: translateY(0px);
+	}
+	100%{
+	transform: translateY(-2px);
+	}
+}
 }
 @keyframes hazardAnimate{
 	

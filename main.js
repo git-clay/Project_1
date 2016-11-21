@@ -3,7 +3,6 @@ var retrievedTurn = sessionStorage.getItem('currentTurn'); ////saved turn #
   var inputInfo = window.location.search; //drops info from previous inputs (?Player+1=c&Player+2=s)
   var user1name = inputInfo.slice(10, inputInfo.indexOf('&')); //slices ^ to get player1name
   var user2name = inputInfo.slice(inputInfo.indexOf('&') + 10); //slices to get player 2 name
-console.log(retrievedTurn);
 
 var domSelector = function(element) { //function to search for id,class,or tag (element)
   var found;
@@ -48,14 +47,12 @@ window.onload = function() { //waits for the page to load, then runs this
     board.append(point3.tag);
     board.append(point4.tag);
     board.append(point5.tag);
-
   }
   
 
   /*____________________________Player Constructor and make players_____________________________________*/
   function Player(id, name, x, y, score) {
     this.tag = document.createElement('div');
-    this.tag.setAttribute('class', "playerAnimate");
     this.tag.id = id;
     this.name = name;
     this.x = x;
@@ -142,7 +139,7 @@ window.onload = function() { //waits for the page to load, then runs this
         console.log('collect objective!!!!!!!');
         var rm = point[i].tag;  //identifies which point was interacted with
         point[i] = ''; ///removes point from array
-        if(player.tag.id==='p1'){  //changes class for p1 or p2 to make correct animation
+        if(player.tag.id==='p1'){  //changes class of point for p1 or p2 to make correct animation
          rm.setAttribute('class', 'fireAfter point pointAnimate');
        } else {
         rm.setAttribute('class', 'waterAfter point pointAnimate');
@@ -156,6 +153,7 @@ window.onload = function() { //waits for the page to load, then runs this
     var currentId = document.getElementById(player.tag.id);
     var att = ('left:' + player.x + 'px' + ';top:' + player.y + 'px');
     if (currentKey === 37) { //checkes keypress for left arrow (currentKey in moveX()) left=++
+      player.tag.setAttribute('class', 'playerAnimateL'); //adds animation class
       if (player.x < 0) { //checks x position of player to determin if out of bounds
         console.log('out of bounds' + player.x);
         player.x = 0;
@@ -165,6 +163,7 @@ window.onload = function() { //waits for the page to load, then runs this
         currentId.setAttribute('style', att);
       }
     } else if (currentKey === 39) { //checks for right arrow press left = --
+      player.tag.setAttribute('class', 'playerAnimateR');
       if (player.x > 800) {
         console.log('out of bounds' + player.x);
         player.x = player.x = 800;
@@ -180,6 +179,7 @@ window.onload = function() { //waits for the page to load, then runs this
     var currentId = document.getElementById(player.tag.id);
     var att = ('left:' + player.x + 'px' + ';top:' + player.y + 'px');
     if (currentKey === 38) { //checkes keypress for up arrow (currentKey in moveX()) top=++
+    player.tag.setAttribute('class', 'playerAnimateU');
       if (player.y < 0) {
         console.log('out of bounds' + player.y);
         player.y = 0;
@@ -189,6 +189,7 @@ window.onload = function() { //waits for the page to load, then runs this
         currentId.setAttribute('style', att);
       }
     } else if (currentKey === 40) { //checks for down arrow press top = --
+    player.tag.setAttribute('class', 'playerAnimateD');
       if (player.y > 500) {
         console.log('out of bounds' + player.y);
         player.y = 500;
